@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="btdstudio">
+  <title>btdstudio</title>
+  <rect width="512" height="512" rx="72" fill="#c8402a"/>
+  <g fill="#fff">
+    <rect x="112" y="116" width="288" height="44"/>
+    <rect x="234" y="116" width="44" height="280"/>
+    <rect x="80" y="352" width="352" height="44"/>
+  </g>
+</svg>

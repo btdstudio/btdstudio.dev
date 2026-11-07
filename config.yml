@@ -1,0 +1,16 @@
+url: https://btdstudio.dev
+title: btdstudio
+subtitle: Plan it in folders. Build it in folders.
+author: btdstudio
+description: Four small Go CLIs for spec-first, AI-assisted software work. Plan in zumen, drive with tomo, and generate apps and sites with kumi and hanga.
+copyright_year: 2026
+
+root: /
+source: source
+destination: public
+titlecase: false
+
+deploy:
+  type: github
+  repo: https://github.com/btdstudio/btdstudio.dev.git
+  branch: gh-pages
