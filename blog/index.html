@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>btdstudio: Plan it in folders. Build it in folders.</title>
+  <meta name="description" content="Four small Go CLIs for spec-first, AI-assisted software work. Plan in zumen, drive with tomo, and generate apps and sites with kumi and hanga.">
+  <link rel="canonical" href="https://btdstudio.dev/">
+  <meta property="og:title" content="btdstudio: Plan it in folders. Build it in folders.">
+  <meta property="og:description" content="Four small Go CLIs for spec-first, AI-assisted software work. Plan in zumen, drive with tomo, and generate apps and sites with kumi and hanga.">
+  <meta property="og:url" content="https://btdstudio.dev/">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#f4f1e8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#16181c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/images/btdstudio-mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/stylesheets/site.css">
+  <script src="/javascripts/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="wrap masthead-row">
+      <a class="wordmark" href="/"><img class="seal" src="/images/btdstudio-mark.svg" alt="" width="26" height="26">btdstudio</a>
+      <nav aria-label="Primary">
+        <a href="#flow">How it works</a>
+        <a href="#tools">Tools</a>
+        <a href="https://github.com/btdstudio">GitHub</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+<section class="hero">
+  <div class="wrap">
+    <h1>Plan it in folders. Build it in folders.</h1>
+    <p class="lede">btdstudio is four small Go CLIs for spec-first, AI-assisted software work. The filesystem is the architecture, your approvals are the gates, and any AI harness can follow along. So can you, without one.</p>
+    <div class="hero-install">
+      <div class="cmd" data-copy="go install github.com/btdstudio/zumen/cmd/zumen@latest"><code>go install github.com/btdstudio/<wbr>zumen/cmd/zumen@latest</code></div>
+      <div class="cmd" data-copy="go install github.com/btdstudio/tomo/cmd/tomo@latest"><code>go install github.com/btdstudio/<wbr>tomo/cmd/tomo@latest</code></div>
+    </div>
+    <p class="note">Requires Go. <code>tomo add</code> installs kumi and hanga when you first need them.</p>
+  </div>
+</section>
+
+<section class="section" id="flow">
+  <div class="wrap">
+    <p class="label">How it works</p>
+    <h2>From a plan to a pull request.</h2>
+    <p class="lede">Each tool works on its own. zumen and tomo connect through one thing, a markdown ticket, with no shared runtime and no service in the middle.</p>
+
+    <div class="chain" role="img" aria-label="zumen plans the work and produces tickets. tomo takes a ticket and lands it in one repo, which it can scaffold with kumi or hanga.">
+      <a class="node" href="#zumen"><strong>zumen</strong><span>plans the work</span></a>
+      <div class="edge">ticket</div>
+      <a class="node" href="#tomo"><strong>tomo</strong><span>lands one change</span></a>
+      <div class="edge">add</div>
+      <div class="node-stack">
+        <a class="node" href="#kumi"><strong>kumi</strong><span>generates web apps</span></a>
+        <a class="node" href="#hanga"><strong>hanga</strong><span>generates static sites</span></a>
+      </div>
+    </div>
+
+    <div class="steps">
+      <article class="step">
+        <div>
+          <span class="step-no">01</span>
+          <h3>Plan behind gates</h3>
+          <p>An initiative moves through intake, spec, architecture and breakdown, with research, explore and synthesis when you need them. You and your AI harness write the files, each phase waits for your approval, and the plan ends in tickets.</p>
+        </div>
+<pre class="term"><code><span class="p">$</span> zumen init plan &amp;&amp; cd plan
+<span class="d">scaffolded planning ICM workspace in plan</span>
+<span class="p">$</span> zumen repo add webapp git@github.com:acme/webapp.git
+<span class="d">added webapp — commit REPOS.json to share it</span>
+<span class="p">$</span> zumen change new "Customer accounts"
+<span class="d">created change 1-customer-accounts (source #1)
+explore skipped
+synthesis skipped</span>
+<span class="p">$</span> zumen gate breakdown approved
+<span class="d">zumen: breakdown requires intake to be approved (currently "draft") (pass --force to override)</span>
+<span class="p">$</span> zumen gate intake approved
+<span class="d">1-customer-accounts: intake = approved</span>
+<span class="p">$</span> zumen gate research skipped --reason "new app"
+<span class="d">1-customer-accounts: research = skipped</span>
+<span class="p">$</span> zumen gate spec approved
+<span class="d">1-customer-accounts: spec = approved</span>
+<span class="p">$</span> zumen gate architecture approved
+<span class="d">1-customer-accounts: architecture = approved</span>
+<span class="p">$</span> zumen tickets new story "Add password reset" --repo webapp
+<span class="d">created S-0001 specs/1-customer-accounts/tickets/S-0001.md</span>
+<span class="c"># write the acceptance criteria, then set status: ready</span>
+<span class="p">$</span> zumen gate breakdown approved
+<span class="d">1-customer-accounts: breakdown = approved</span></code></pre>
+      </article>
+
+      <article class="step">
+        <div>
+          <span class="step-no">02</span>
+          <h3>Hand off a ticket</h3>
+          <p>Tickets are the only interface out of a zumen workspace. tomo takes a ready or published ticket as a snapshot and starts one change in one repo. The ticket is plain markdown, so any other harness can pick it up too.</p>
+        </div>
+<pre class="term"><code><span class="p">$</span> tomo init ../build &amp;&amp; cd ../build
+<span class="d">scaffolded ICM workspace in ../build</span>
+<span class="p">$</span> tomo add kumi webapp --path ../webapp \
+    --remote git@github.com:acme/webapp.git github.com/acme/webapp
+<span class="d">added webapp from github.com/btdstudio/kumi/cmd/kumi at ../webapp — commit REPOS.json to share it</span>
+<span class="p">$</span> tomo change new --from \
+    ../plan/specs/1-customer-accounts/tickets/S-0001.md
+<span class="d">created change 1-add-password-reset (ticket S-0001)</span></code></pre>
+      </article>
+
+      <article class="step">
+        <div>
+          <span class="step-no">03</span>
+          <h3>Land it in the repo</h3>
+          <p>Approvals don't carry over, because tomo approves something different: how this ticket lands in this repo. The change then runs through implement, test, review, security and ship, and ends in a pull request that links the ticket.</p>
+        </div>
+<pre class="term"><code><span class="p">$</span> tomo gate intake approved
+<span class="d">1-add-password-reset: intake = approved</span>
+<span class="p">$</span> tomo gate requirements approved
+<span class="d">1-add-password-reset: requirements = approved</span>
+<span class="p">$</span> tomo gate design approved
+<span class="d">1-add-password-reset: design = approved</span>
+<span class="p">$</span> tomo gate plan approved
+<span class="d">1-add-password-reset: plan = approved</span>
+<span class="p">$</span> tomo gate implement in-progress
+<span class="d">1-add-password-reset: implement = in-progress</span>
+<span class="p">$</span> tomo status
+<span class="d">change:   1-add-password-reset
+phase:    implement
+status:   in-progress
+gates:    intake=approved requirements=approved design=approved plan=approved implement=in-progress test= review= security= ship=
+ticket:   S-0001 Add password reset
+branch:   s-0001-add-password-reset</span></code></pre>
+      </article>
+    </div>
+    <p class="note">Real output from zumen v0.3.0 and tomo v0.8.0, with scaffold lines trimmed and paths shortened. The comment marks a manual step.</p>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="wrap">
+    <p class="label">The tools</p>
+    <h2>Four CLIs. Use one or all of them.</h2>
+    <div class="sheets">
+      <article class="sheet" id="zumen">
+        <div class="sheet-head"><h3>zumen</h3><span class="kanji" lang="ja">図面</span></div>
+        <p class="gloss">blueprint</p>
+        <p>Plans initiatives that take weeks and often span many repos, and ends in tickets.</p>
+        <ul>
+          <li>Research, spec, architecture and breakdown, each behind a gate</li>
+          <li>Approvals committed to git, so they survive a clone</li>
+          <li>Tickets as markdown, which an agent can sync to your PM tool</li>
+        </ul>
+        <div class="cmd" data-copy="go install github.com/btdstudio/zumen/cmd/zumen@latest"><code>go install github.com/btdstudio/<wbr>zumen/cmd/zumen@latest</code></div>
+        <a class="sheet-link" href="https://github.com/btdstudio/zumen">Read the zumen docs on GitHub</a>
+      </article>
+
+      <article class="sheet" id="tomo">
+        <div class="sheet-head"><h3>tomo</h3><span class="kanji" lang="ja">友</span></div>
+        <p class="gloss">companion</p>
+        <p>Takes one change in one repo from a ticket to a pull request, for any AI harness or none.</p>
+        <ul>
+          <li>Nine phases, including test, review and security</li>
+          <li>Plans stay in the workspace, code in one target repo</li>
+          <li>Scaffolds that repo with <code>tomo add</code></li>
+        </ul>
+        <div class="cmd" data-copy="go install github.com/btdstudio/tomo/cmd/tomo@latest"><code>go install github.com/btdstudio/<wbr>tomo/cmd/tomo@latest</code></div>
+        <a class="sheet-link" href="https://github.com/btdstudio/tomo">Read the tomo docs on GitHub</a>
+      </article>
+
+      <article class="sheet" id="kumi">
+        <div class="sheet-head"><h3>kumi</h3><span class="kanji" lang="ja">組</span></div>
+        <p class="gloss">assembly</p>
+        <p>Scaffolds Go + HTMX + Bootstrap 5 web apps with the unglamorous parts already in place.</p>
+        <ul>
+          <li>Auth, password reset, dashboard and settings</li>
+          <li>Catppuccin and other themes</li>
+          <li>Hot reload and migrations with <code>kumi dev</code> and <code>kumi db migrate</code></li>
+        </ul>
+        <div class="cmd" data-copy="go install github.com/btdstudio/kumi/cmd/kumi@latest"><code>go install github.com/btdstudio/<wbr>kumi/cmd/kumi@latest</code></div>
+        <a class="sheet-link" href="https://github.com/btdstudio/kumi">Read the kumi docs on GitHub</a>
+      </article>
+
+      <article class="sheet" id="hanga">
+        <div class="sheet-head"><h3>hanga</h3><span class="kanji" lang="ja">版画</span></div>
+        <p class="gloss">woodblock print</p>
+        <p>A fast static site generator compatible with Jekyll and Octopress. This site is built with it.</p>
+        <ul>
+          <li>Liquid templates and Chroma code highlighting</li>
+          <li>Preview server with rebuild on save</li>
+          <li>Deploys to S3, GitHub Pages or (S)FTP</li>
+        </ul>
+        <div class="cmd" data-copy="go install github.com/btdstudio/hanga/cmd/hanga@latest"><code>go install github.com/btdstudio/<wbr>hanga/cmd/hanga@latest</code></div>
+        <a class="sheet-link" href="https://github.com/btdstudio/hanga">Read the hanga docs on GitHub</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="method">
+  <div class="wrap method">
+    <div>
+      <p class="label">The method</p>
+      <h2>The folder is the architecture.</h2>
+      <p>zumen and tomo implement Interpretable Context Methodology (ICM). Instead of keeping process in a framework, the workspace itself holds it: numbered stages, the persona for each stage, templates and a map at the root.</p>
+      <p>Your harness reads <code>AGENTS.md</code> and follows the structure. Nothing needs to run after scaffolding, and you can read everything it reads.</p>
+      <p>ICM is described by Jake Van Clief and David McDermott in <a href="https://arxiv.org/abs/2603.16021">"Interpretable Context Methodology: Folder Structure as Agentic Architecture"</a>.</p>
+    </div>
+<pre class="term" aria-label="A zumen workspace"><code><span class="d"># a zumen workspace</span>
+├── AGENTS.md
+├── STATE.json
+├── LOG.md
+├── REPOS.json
+├── 00_intake/
+├── 01_research/
+├── 02_explore/
+├── 03_spec/
+├── 04_architecture/
+├── 05_breakdown/
+├── 06_publish/
+└── specs/</code></pre>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <div class="close-box">
+      <h2>Start with a plan.</h2>
+      <div class="hero-install">
+        <div class="cmd" data-copy="go install github.com/btdstudio/zumen/cmd/zumen@latest"><code>go install github.com/btdstudio/<wbr>zumen/cmd/zumen@latest</code></div>
+        <div class="cmd" data-copy="zumen init my-plan"><code>zumen init my-plan</code></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </main>
+  <footer class="colophon">
+    <div class="wrap colophon-row">
+      <span>Built with <a href="#hanga">hanga</a>.</span>
+      <a href="https://github.com/btdstudio">github.com/btdstudio</a>
+    </div>
+  </footer>
+</body>
+</html>
