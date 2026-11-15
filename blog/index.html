@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>btdstudio: Plan it in folders. Build it in folders.</title>
+  <meta name="description" content="Three small Go CLIs for spec-first, AI-assisted software work. Plan and build in daiku, and generate apps and sites with kumi and hanga.">
+  <link rel="canonical" href="https://btdstudio.dev/">
+  <meta property="og:title" content="btdstudio: Plan it in folders. Build it in folders.">
+  <meta property="og:description" content="Three small Go CLIs for spec-first, AI-assisted software work. Plan and build in daiku, and generate apps and sites with kumi and hanga.">
+  <meta property="og:url" content="https://btdstudio.dev/">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#f4f1e8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#16181c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/stylesheets/site.css">
+  <script src="/javascripts/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="wrap masthead-row">
+      <a class="wordmark" href="/"><img class="seal" src="/favicon.svg" alt="" width="28" height="28">btdstudio</a>
+      <nav aria-label="Primary">
+        <a href="#flow">How it works</a>
+        <a href="#tools">Tools</a>
+        <a href="https://github.com/btdstudio">GitHub</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+<section class="hero">
+  <div class="wrap">
+    <h1>Plan it in folders. Build it in folders.</h1>
+    <p class="lede">btdstudio is three small Go CLIs for spec-first, AI-assisted software work. The filesystem is the architecture, your approvals are the gates, and any AI harness can follow along. So can you, without one.</p>
+    <div class="hero-install">
+      <div class="cmd" data-copy="go install github.com/btdstudio/daiku/cmd/daiku@latest"><code>go install github.com/btdstudio/<wbr>daiku/cmd/daiku@latest</code></div>
+    </div>
+    <p class="note">Requires Go. kumi and hanga install the same way, when you need them.</p>
+  </div>
+</section>
+
+<section class="section" id="flow">
+  <div class="wrap">
+    <p class="label">How it works</p>
+    <h2>From a plan to a pull request.</h2>
+    <p class="lede">One daiku workspace has a room for each kind of work. The plan room and the build room connect through one thing, a markdown ticket, with no shared runtime and no service in the middle.</p>
+
+    <div class="chain" role="img" aria-label="daiku's plan room plans the work and produces tickets. Its build room takes a ticket and lands it in one repo, which you can start with kumi or hanga.">
+      <a class="node" href="#daiku"><strong>daiku plan</strong><span>plans the work</span></a>
+      <div class="edge">ticket</div>
+      <a class="node" href="#daiku"><strong>daiku build</strong><span>lands one change</span></a>
+      <div class="edge">repo</div>
+      <div class="node-stack">
+        <a class="node" href="#kumi"><strong>kumi</strong><span>generates web apps</span></a>
+        <a class="node" href="#hanga"><strong>hanga</strong><span>generates static sites</span></a>
+      </div>
+    </div>
+
+    <div class="steps">
+      <article class="step">
+        <div>
+          <span class="step-no">01</span>
+          <h3>Plan behind gates</h3>
+          <p>An initiative moves through intake, spec, architecture and breakdown, with research, explore and synthesis when you need them. You and your AI harness write the files, each phase waits for your approval, and the plan ends in tickets.</p>
+        </div>
+<pre class="term"><code><span class="p">$</span> daiku init acme &amp;&amp; cd acme
+<span class="d">scaffolded daiku workspace in acme</span>
+<span class="p">$</span> daiku repo add webapp git@github.com:acme/webapp.git \
+    --path ~/src/webapp
+<span class="d">added webapp — commit REPOS.json to share it</span>
+<span class="p">$</span> daiku change new "Customer accounts" --repo webapp
+<span class="d">created room plan/
+created change 1-customer-accounts (source #1)
+synthesis skipped</span>
+<span class="p">$</span> daiku gate breakdown approved
+<span class="d">daiku: breakdown requires intake to be approved (currently "draft")
+daiku: breakdown approved: 1 artifact problem(s):
+  plan/specs/1-customer-accounts/tickets: no tickets
+(pass --force to override)</span>
+<span class="p">$</span> daiku gate intake approved
+<span class="d">1-customer-accounts: intake = approved</span>
+<span class="p">$</span> daiku gate research skipped --reason "new app"
+<span class="d">1-customer-accounts: research = skipped</span>
+<span class="p">$</span> daiku gate explore skipped --reason "new app"
+<span class="d">1-customer-accounts: explore = skipped</span>
+<span class="c"># write the functional spec and the architecture</span>
+<span class="p">$</span> daiku gate spec approved
+<span class="d">1-customer-accounts: spec = approved</span>
+<span class="p">$</span> daiku gate architecture approved
+<span class="d">1-customer-accounts: architecture = approved</span>
+<span class="p">$</span> daiku tickets new story "Add password reset" \
+    --repo webapp --requirements R1
+<span class="d">created S-0001 plan/specs/1-customer-accounts/tickets/S-0001.md</span>
+<span class="c"># write the acceptance criteria</span>
+<span class="p">$</span> daiku gate breakdown approved
+<span class="d">1-customer-accounts: breakdown = approved</span></code></pre>
+      </article>
+
+      <article class="step">
+        <div>
+          <span class="step-no">02</span>
+          <h3>Hand off a ticket</h3>
+          <p>Tickets are the only interface between the plan room and the build room. Once breakdown is approved, a ready ticket starts a build: one change in one repo. The ticket is plain markdown, so it can also come from your PM tool, or go to any other harness.</p>
+        </div>
+<pre class="term"><code><span class="p">$</span> daiku tickets ready --all
+<span class="d">S-0001: ready</span>
+<span class="p">$</span> daiku build new S-0001
+<span class="d">created room build/
+created build S-0001 for webapp (plan/specs/1-customer-accounts/tickets/S-0001.md)</span></code></pre>
+      </article>
+
+      <article class="step">
+        <div>
+          <span class="step-no">03</span>
+          <h3>Land it in the repo</h3>
+          <p>Approvals don't carry over, because a build approves something different: how this ticket lands in this repo. It runs through requirements, design and tasks, then implement, test, review, security and ship, and ends in a pull request that links the ticket. One build per repo writes code at a time.</p>
+        </div>
+<pre class="term"><code><span class="p">$</span> daiku gate ticket approved
+<span class="d">S-0001: ticket = approved</span>
+<span class="p">$</span> daiku gate requirements approved
+<span class="d">S-0001: requirements = approved</span>
+<span class="p">$</span> daiku gate design approved
+<span class="d">S-0001: design = approved</span>
+<span class="p">$</span> daiku gate tasks approved
+<span class="d">S-0001: tasks = approved</span>
+<span class="p">$</span> daiku gate implement in-progress
+<span class="d">S-0001: implement = in-progress</span>
+<span class="p">$</span> daiku status
+<span class="d">change:   S-0001
+room:     build
+repo:     webapp
+phase:    implement
+status:   in-progress
+gates:    ticket=approved requirements=approved design=approved tasks=approved implement=in-progress test= review= security= ship=
+initiative: 1-customer-accounts
+code:     webapp=~/src/webapp
+ticket:   S-0001 Add password reset
+branch:   s-0001-add-password-reset
+vcs:      git
+
+plans:
+  1-customer-accounts  breakdown approved
+
+builds:
+  webapp  held by S-0001
+  * S-0001  implement in-progress</span></code></pre>
+      </article>
+    </div>
+    <p class="note">Real output from daiku v0.1.0, with scaffold lines trimmed and paths shortened. Comments mark manual steps.</p>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="wrap">
+    <p class="label">The tools</p>
+    <h2>Three CLIs. Use one or all of them.</h2>
+    <div class="sheets">
+      <article class="sheet sheet-wide" id="daiku">
+        <div class="sheet-head"><h3>daiku</h3><span class="kanji" lang="ja">大工</span></div>
+        <p class="gloss">carpenter</p>
+        <p>Plans initiatives that take weeks and span many repos, then builds each ticket in one repo through to a pull request, for any AI harness or none.</p>
+        <ul>
+          <li>A plan room: research, spec, architecture and breakdown, each behind a gate</li>
+          <li>A build room: requirements to ship, including test, review and security</li>
+          <li>Tickets as markdown, which an agent can sync with your PM tool</li>
+          <li>Approvals committed to git, so they survive a clone</li>
+        </ul>
+        <div class="cmd" data-copy="go install github.com/btdstudio/daiku/cmd/daiku@latest"><code>go install github.com/btdstudio/<wbr>daiku/cmd/daiku@latest</code></div>
+        <a class="sheet-link" href="https://github.com/btdstudio/daiku">Read the daiku docs on GitHub</a>
+      </article>
+
+      <article class="sheet" id="kumi">
+        <div class="sheet-head"><h3>kumi</h3><span class="kanji" lang="ja">組</span></div>
+        <p class="gloss">assembly</p>
+        <p>Scaffolds Go + HTMX + Bootstrap 5 web apps with the unglamorous parts already in place.</p>
+        <ul>
+          <li>Auth, password reset, dashboard and settings</li>
+          <li>Catppuccin and other themes</li>
+          <li>Hot reload and migrations with <code>kumi dev</code> and <code>kumi db migrate</code></li>
+        </ul>
+        <div class="cmd" data-copy="go install github.com/btdstudio/kumi/cmd/kumi@latest"><code>go install github.com/btdstudio/<wbr>kumi/cmd/kumi@latest</code></div>
+        <a class="sheet-link" href="https://github.com/btdstudio/kumi">Read the kumi docs on GitHub</a>
+      </article>
+
+      <article class="sheet" id="hanga">
+        <div class="sheet-head"><h3>hanga</h3><span class="kanji" lang="ja">版画</span></div>
+        <p class="gloss">woodblock print</p>
+        <p>A fast static site generator compatible with Jekyll and Octopress. This site is built with it.</p>
+        <ul>
+          <li>Liquid templates and Chroma code highlighting</li>
+          <li>Preview server with rebuild on save</li>
+          <li>Deploys to S3, GitHub Pages or (S)FTP</li>
+        </ul>
+        <div class="cmd" data-copy="go install github.com/btdstudio/hanga/cmd/hanga@latest"><code>go install github.com/btdstudio/<wbr>hanga/cmd/hanga@latest</code></div>
+        <a class="sheet-link" href="https://github.com/btdstudio/hanga">Read the hanga docs on GitHub</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="method">
+  <div class="wrap method">
+    <div>
+      <p class="label">The method</p>
+      <h2>The folder is the architecture.</h2>
+      <p>daiku implements Interpretable Context Methodology (ICM). Instead of keeping process in a framework, the workspace itself holds it: a room for each kind of work, numbered stages, the persona for each stage, templates and a map at the root.</p>
+      <p>Your harness reads <code>AGENTS.md</code> and follows the structure. Nothing needs to run after scaffolding, and you can read everything it reads.</p>
+      <p>ICM is described by Jake Van Clief and David McDermott in <a href="https://arxiv.org/abs/2603.16021">"Interpretable Context Methodology: Folder Structure as Agentic Architecture"</a>.</p>
+    </div>
+<pre class="term" aria-label="A daiku workspace"><code><span class="d"># a daiku workspace</span>
+├── AGENTS.md
+├── STATE.json
+├── LOG.md
+├── REPOS.json
+├── sync.md
+├── ideas/
+├── references/
+├── plan/
+│   ├── 00_intake/ … 06_publish/
+│   └── specs/
+└── build/
+    ├── tickets/
+    ├── 01_design/ … 04_refactoring/
+    └── webapp/changes/</code></pre>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <div class="close-box">
+      <h2>Start with a plan.</h2>
+      <div class="hero-install">
+        <div class="cmd" data-copy="go install github.com/btdstudio/daiku/cmd/daiku@latest"><code>go install github.com/btdstudio/<wbr>daiku/cmd/daiku@latest</code></div>
+        <div class="cmd" data-copy="daiku init my-workspace"><code>daiku init my-workspace</code></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </main>
+  <footer class="colophon">
+    <div class="wrap colophon-row">
+      <span>Built with <a href="#hanga">hanga</a>.</span>
+      <a href="https://github.com/btdstudio">github.com/btdstudio</a>
+    </div>
+  </footer>
+</body>
+</html>
