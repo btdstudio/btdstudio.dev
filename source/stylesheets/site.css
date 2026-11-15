@@ -194,7 +194,10 @@ code { font-family: var(--mono); font-size: .88em; overflow-wrap: anywhere; }
   border-bottom: 1px solid var(--rule);
   scroll-margin-top: 72px;
 }
-.sheet:nth-child(2n) { border-right: 0; }
+.sheet-wide { grid-column: 1 / -1; }
+.sheet-wide, .sheet:last-child { border-right: 0; }
+.sheet-wide ul { columns: 2; column-gap: 40px; }
+.sheet-wide li { break-inside: avoid; }
 .sheet:nth-last-child(-n + 2) { border-bottom: 0; }
 .sheet-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 .sheet h3 { margin: 0; font: 600 26px var(--mono); }
@@ -227,6 +230,7 @@ code { font-family: var(--mono); font-size: .88em; overflow-wrap: anywhere; }
   .edge::before { left: 9px; right: auto; bottom: 3px; transform: rotate(135deg); }
   .sheets { grid-template-columns: minmax(0, 1fr); }
   .sheet { border-right: 0; }
+  .sheet-wide ul { columns: 1; }
   .sheet:nth-last-child(2) { border-bottom: 1px solid var(--rule); }
 }
 

@@ -8,8 +8,8 @@ hanga serve    # preview at http://localhost:4000
 hanga deploy   # build and force-push public/ to the gh-pages branch
 ```
 
-The walkthrough on the home page shows real command output. When zumen or tomo
-change their commands or output, re-run it and update the page and the versions
-in the note below it.
+The walkthrough on the home page shows real command output. When daiku changes
+its commands or output, re-run it and update the page and the version in the
+note below it.
 
 `brand/` holds the logo master and the account avatar. It isn't published.
