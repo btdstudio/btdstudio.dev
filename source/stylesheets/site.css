@@ -5,12 +5,12 @@
   --muted: #5d6065;
   --rule: #cfc9b8;
   --grid: rgba(29, 32, 36, .045);
-  --seal: #c8402a;
-  --seal-text: #b03521;
+  --accent: #8a5a10;   /* logo wood gold, darkened for text */
+  --link: #1a3d84;     /* logo blueprint navy */
   --term: #181a1f;
   --term-ink: #e6e3da;
   --term-dim: #8f939b;
-  --term-accent: #f0a48f;
+  --term-accent: #f2c46a;
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
 }
@@ -23,8 +23,8 @@
     --muted: #a3a6ac;
     --rule: #363a41;
     --grid: rgba(236, 233, 224, .035);
-    --seal: #d6502f;
-    --seal-text: #f0876d;
+    --accent: #e3a943;
+    --link: #9cc0ff;
     --term: #0f1114;
   }
 }
@@ -45,8 +45,8 @@ body {
 }
 
 a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-a:hover { color: var(--seal-text); }
-:focus-visible { outline: 2px solid var(--seal-text); outline-offset: 2px; }
+a:hover { color: var(--link); }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
 code { font-family: var(--mono); font-size: .88em; overflow-wrap: anywhere; }
 
 .wrap { width: min(1120px, 100%); margin: 0 auto; padding: 0 24px; }
@@ -62,7 +62,7 @@ code { font-family: var(--mono); font-size: .88em; overflow-wrap: anywhere; }
 }
 .masthead-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 60px; }
 .wordmark { display: inline-flex; align-items: center; gap: 10px; font: 600 16px var(--mono); text-decoration: none; }
-.seal { display: block; width: 26px; height: 26px; }
+.seal { display: block; width: 28px; height: 28px; }
 .masthead nav { display: flex; gap: 22px; font-size: 15px; }
 .masthead nav a { text-decoration: none; white-space: nowrap; }
 .masthead nav a:hover { text-decoration: underline; }
@@ -70,7 +70,7 @@ code { font-family: var(--mono); font-size: .88em; overflow-wrap: anywhere; }
 /* Shared section furniture */
 .label {
   margin: 0 0 14px;
-  color: var(--seal-text);
+  color: var(--accent);
   font: 600 13px var(--mono);
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -161,7 +161,7 @@ code { font-family: var(--mono); font-size: .88em; overflow-wrap: anywhere; }
 .steps { margin-top: 56px; }
 .step h3 { margin: 0 0 10px; font-size: 22px; line-height: 1.25; }
 .step p { margin: 0; color: var(--muted); }
-.step-no { display: block; margin-bottom: 10px; color: var(--seal-text); font: 600 13px var(--mono); }
+.step-no { display: block; margin-bottom: 10px; color: var(--accent); font: 600 13px var(--mono); }
 .term {
   color-scheme: dark;
   margin: 0;
@@ -201,7 +201,7 @@ code { font-family: var(--mono); font-size: .88em; overflow-wrap: anywhere; }
 .sheet:nth-last-child(-n + 2) { border-bottom: 0; }
 .sheet-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 .sheet h3 { margin: 0; font: 600 26px var(--mono); }
-.kanji { color: var(--seal-text); font-size: 26px; font-weight: 700; white-space: nowrap; }
+.kanji { color: var(--accent); font-size: 26px; font-weight: 700; white-space: nowrap; }
 .gloss { margin: 2px 0 14px; color: var(--muted); font: 13px var(--mono); }
 .sheet > p { margin: 0 0 14px; }
 .sheet ul { margin: 0 0 22px; padding-left: 18px; color: var(--muted); font-size: 15.5px; }
